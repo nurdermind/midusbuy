@@ -34,6 +34,8 @@ def refresh_page(driver, sleep=1):
 
 def click_ok_and_confirm(driver, ok_selector, confirm_selector, code):
     if click_element(driver, ok_selector, element_name="OK"):
+        driver.save_screenshot('done.png')
+        return True
         if handle_invalid_code(driver):
             new_code = db.code()
             fill_text_field(driver, "input[placeholder='Please enter a redeem code']", new_code)
@@ -180,6 +182,7 @@ def code_entry_process(driver, db, countus, ids):
                                     "//div[contains(@class, 'redeem_modules_box default_box')]//div[contains(@class, 'Button_icon_text') and text()='OK']",
                                     "//div[contains(@class, 'PopConfirmRedeem')]//div[contains(@class, 'Button_icon') and text()='Confirm']",
                                     code=code):
+                break
                 print(f"Зачислил UC  по заказу {ids}. {i}|{num_attempts}")
                 if not click_element(driver,
                                      "//div[contains(@class, 'PurchaseContainer')]//div[contains(@class, 'Button_icon') and text()='Return to Shop']"):
